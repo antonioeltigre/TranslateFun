@@ -118,10 +118,15 @@ namespace RavSoft.GoogleTranslator
                         // Fix up translation
                         translation = translation.Trim();
                         translation = translation.Replace(" ?", "?");
+                        translation = translation.Replace("? ", "?");
                         translation = translation.Replace(" !", "!");
+                        translation = translation.Replace("! ", "!");
                         translation = translation.Replace(" ,", ",");
+                        translation = translation.Replace(", ", ",");
                         translation = translation.Replace(" .", ".");
+                        translation = translation.Replace(". ", ".");
                         translation = translation.Replace(" ;", ";");
+                        translation = translation.Replace("; ", ";");
 
                         // And translation speech URL
                         this.TranslationSpeechUrl = string.Format ("https://translate.googleapis.com/translate_tts?ie=UTF-8&q={0}&tl={1}&total=1&idx=0&textlen={2}&client=gtx",
