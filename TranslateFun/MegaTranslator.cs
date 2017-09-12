@@ -8,17 +8,17 @@
     {
         public async Task<string> TranslateLotsOfTimesAsync(string text, int numberOfTimesToTranslate)
         {
-            return await Task.Run(() => Translate(text, numberOfTimesToTranslate));
+            return await Translate(text, numberOfTimesToTranslate);
         }
 
-        private static string Translate(string text, int numberOfTimesToTranslate)
+        private static async Task<string> Translate(string text, int numberOfTimesToTranslate)
         {
             var translator = new Translator();
 
             for (var i = 0; i < numberOfTimesToTranslate; i++)
             {
-                var chinese = translator.Translate(text, "English", "Chinese");
-                text = translator.Translate(chinese, "Chinese", "English");
+                var chinese = await translator.Translate(text, "English", "Chinese");
+                text = await translator.Translate(chinese, "Chinese", "English");
             }
 
             return text;
