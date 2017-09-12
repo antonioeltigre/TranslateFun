@@ -35,7 +35,7 @@
 
         private void ButtonEnabled(bool enabled) => this.viewModel.TranslateButtonEnabled = enabled;
 
-        private async Task<string> TranslatedResult() => await new MegaTranslator().TranslateLotsOfTimesAsync(this.viewModel.TextToTranslate, 10);
+        private async Task<string> TranslatedResult() => await new MegaTranslator().TranslateLotsOfTimesAsync(this.viewModel.TextToTranslate);
 
         private void ClearResults() => this.viewModel.Result = string.Empty;
 

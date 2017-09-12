@@ -1,27 +1,42 @@
 ﻿namespace TranslateFun
 {
+    using System.Collections.Generic;
     using System.Threading.Tasks;
 
     using RavSoft.GoogleTranslator;
 
     public class MegaTranslator
     {
-        public async Task<string> TranslateLotsOfTimesAsync(string text, int numberOfTimesToTranslate)
-        {
-            return await Translate(text, numberOfTimesToTranslate);
-        }
+        private static readonly List<string> Languages = new List<string> { "Chinese", "French", "Spanish", "Chinese", "German", "Dutch" };
 
-        private static async Task<string> Translate(string text, int numberOfTimesToTranslate)
+        public async Task<string> TranslateLotsOfTimesAsync(string text)
         {
             var translator = new Translator();
+            var from = string.Empty;
+            var firstGo = true;
 
-            for (var i = 0; i < numberOfTimesToTranslate; i++)
+            foreach (var to in LanguagesIncludingEnglish())
             {
-                var chinese = await translator.Translate(text, "English", "Chinese");
-                text = await translator.Translate(chinese, "Chinese", "English");
+                if (firstGo)
+                {
+                    from = to;
+                    firstGo = false;
+                    continue;
+                }
+                
+                text = await translator.Translate(text, from, to);
+                from = to;
             }
 
             return text;
+        }
+
+        private static List<string> LanguagesIncludingEnglish()
+        {
+            var startLanguage = "English";
+            var languages = new List<string> { startLanguage, startLanguage };
+            languages.InsertRange(1, Languages);
+            return languages;
         }
     }
 }
